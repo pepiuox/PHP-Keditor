@@ -14,5 +14,8 @@ Available at [http://kademi.github.io/keditor/](http://kademi.github.io/keditor/
 1. [Contribute a component](./docs/contribute_a_component.md)
 1. [Support touch devices](./docs/support_touch_devices.md)
 
+##This version with PHP and MySQL
+This version has a support to create pages and save in a database, using php and mysql
+
 ## License
 Please read at [here](./LICENSE.md)
