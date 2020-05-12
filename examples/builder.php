@@ -19,19 +19,15 @@ if (isset($_GET['id'])) {
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Content Editor</title>
-        <link href="plugins/bootstrap-3.4.1/css/bootstrap.min.css" rel="stylesheet" type="text/css" data-type="keditor-style"/>
-        <link rel="stylesheet" type="text/css"
-              href="plugins/font-awesome-4.7.0/css/font-awesome.min.css"
-              data-type="keditor-style" />
+
+        <link href="plugins/bootstrap-4.4.1/css/bootstrap.min.css" rel="stylesheet" type="text/css" data-type="keditor-style"/>
+        <link rel="stylesheet" type="text/css" href="./plugins/font-awesome-4.7.0/css/font-awesome.min.css" data-type="keditor-style" />
         <!-- Start of KEditor styles -->
-        <link rel="stylesheet" type="text/css" href="../dist/css/keditor.css"
-              data-type="keditor-style" />
-        <link rel="stylesheet" type="text/css" href="../dist/css/keditor-components.css"
-              data-type="keditor-style" />
+        <link rel="stylesheet" type="text/css" href="../dist/css/keditor.css" data-type="keditor-style" />
+        <link rel="stylesheet" type="text/css" href="../dist/css/keditor-components.css" data-type="keditor-style" />
         <!-- End of KEditor styles -->
-        <link rel="stylesheet" type="text/css"
-              href="plugins/code-prettify/src/prettify.css" />
-        <link rel="stylesheet" type="text/css" href="css/examples.css" />
+        <link rel="stylesheet" type="text/css" href="./plugins/code-prettify/src/prettify.css" />
+        <link rel="stylesheet" type="text/css" href="./css/examples.css" />
 
     </head>
     <body>
@@ -44,34 +40,23 @@ if (isset($_GET['id'])) {
             </div>
         </div>
         <div id="result"></div>
-        
-        <script type="text/javascript"
-        src="plugins/jquery-1.11.3/jquery-1.11.3.min.js"></script>
-        <script type="text/javascript"
-        src="plugins/bootstrap-3.4.1/js/bootstrap.min.js"></script>
-        
-        <script type="text/javascript"
-        src="plugins/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
-       
+        <script src="plugins/jquery-3.5.1/jquery-3.5.1.min.js" type="text/javascript"></script>
+        <script src="plugins/bootstrap-4.4.1/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="plugins/popper/popper.min.js" type="text/javascript"></script>     
         <script type="text/javascript" src="plugins/ckeditor-4.11.4/ckeditor.js"></script>
-        <script type="text/javascript"
-        src="plugins/formBuilder-2.5.3/form-builder.min.js"></script>
-        <script type="text/javascript"
-        src="plugins/formBuilder-2.5.3/form-render.min.js"></script>
-        <script type="text/javascript"
-        src="plugins/code-prettify/src/prettify.js"></script>
-        <script type="text/javascript"
-        src="plugins/js-beautify-1.7.5/js/lib/beautify.js"></script>
-        <script type="text/javascript"
-        src="plugins/js-beautify-1.7.5/js/lib/beautify-html.js"></script>
-        <script type="text/javascript" src="js/examples.js"></script>
+        <script type="text/javascript" src="./plugins/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="./plugins/ckeditor-4.11.4/ckeditor.js"></script>
+        <script type="text/javascript" src="./plugins/formBuilder-2.5.3/form-builder.min.js"></script>
+        <script type="text/javascript" src="./plugins/formBuilder-2.5.3/form-render.min.js"></script>
         <!-- Start of KEditor scripts -->
-        <script type="text/javascript" src="../dist/js/keditor.js"></script>       
+        <script type="text/javascript" src="../dist/js/keditor.js"></script>
         <script type="text/javascript" src="../dist/js/keditor-components.js"></script>
         <!-- End of KEditor scripts -->
-        <script type="text/javascript"
-        src="plugins/jquery.nicescroll-3.7.6/jquery.nicescroll.js"></script>
-         <script type="text/javascript">
+        <script type="text/javascript" src="./plugins/code-prettify/src/prettify.js"></script>
+        <script type="text/javascript" src="./plugins/js-beautify-1.7.5/js/lib/beautify.js"></script>
+        <script type="text/javascript" src="./plugins/js-beautify-1.7.5/js/lib/beautify-html.js"></script>
+        <script type="text/javascript" src="./js/examples.js"></script>
+        <script type="text/javascript">
             var bsToolip = $.fn.tooltip;
             var bsButton = $.fn.button;
         </script>
@@ -81,12 +66,22 @@ if (isset($_GET['id'])) {
             $.fn.tooltip = bsToolip;
             $.fn.button = bsButton;
         </script>
+        <?php
+        $pages = '';
+        $pages .= '<ul>';
+        $menu = $conn->query("SELECT * FROM page");
+        while ($mn = $menu->fetch_array()) {
+            $pages .= '<li><a class="nav-link" href="builder.php?id=' . $mn['id'] . '"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> ' . $mn['title'] . '</a></li>';
+        }
+        $pages .= '</ul>';
+        ?>
         <script type="text/javascript" data-keditor="script">
             $(function () {
-                $('#content-area').keditor({
+                $('#content-area').keditor({                    
+                    // Extra Items
                     extraTopbarItems: {
                         pageSetting: {
-                            html: '<a href="editor.php" class="btn-back-setting" data-extra-setting="backSetting"><i class="fa fa-tachometer" aria-hidden="true"></i></a><a href="javascript:void(0);" class="btn-page-setting" data-extra-setting="pageSetting"><i class="fa fa-fw fa-cog"></i></a>'
+                            html: '<a href="builder.php" class="btn-back-setting" data-extra-setting="backSetting"><i class="fa fa-file-o" aria-hidden="true"></i></a><a href="javascript:void(0);" class="btn-page-setting" data-extra-setting="pageSetting"><i class="fa fa-fw fa-cog"></i></a>'
                         }
                     },
                     extraSettings: {
@@ -94,7 +89,7 @@ if (isset($_GET['id'])) {
                             title: 'Page Settings',
                             trigger: '.btn-page-setting',
                             settingInitFunction: function (form, keditor) {
-                                form.append('<div><label>Page title: </label> <input type="text" id="title" value="<?php echo $title; ?>"></div><hr /><div id="menu"></div>');
+                                form.append('<div><label>Page title: </label> <input type="text" id="title" value="<?php echo $title; ?>"></div><hr /><div id="menu"><label>Page list: </label><?php echo $pages; ?></div>');
                             },
                             settingShowFunction: function (form, container, keditor) {
                                 form.append('<p><a href="javascript:void(0);">This content is added when showing setting</a></p><br />');
@@ -116,12 +111,15 @@ if (isset($_GET['id'])) {
                         });
                         console.log($('#content-area').keditor('getContent'));
                     }
+                    //
+                    
                 });
             });
         </script>
         <script type="text/javascript">
             $(document).ready(function () {
                 $(".toolbar").prepend('<a type="button" title="Clear" id="clear" name="clear" class="clear-content"><i class="fa fa-trash-o" aria-hidden="true"></i> Clear</a>');
+                $(".toolbar").prepend('<a type="button" title="Update" id="update" name="update" class="update-content"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Update</a>');
                 $(".toolbar").prepend('<a type="button" title="Save" id="save" name="save" class="save-content"><i class="fa fa-fw fa-save"></i> Save</a>');
 
                 //$('<a type="button" title="Clear" id="clear" name="clear" class="clear-content"><i class="fa fa-trash-o" aria-hidden="true"></i> Clear</a>').appendTo(".toolbar");
@@ -134,12 +132,36 @@ if (isset($_GET['id'])) {
                         var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
                         return results[1] || 0;
                     };
-                    
+                    var id = $.urlParam('id');
+                    var title = $('#title').val();
+                    var content = $('#content-area').keditor('getContent');
+
+                    if (id !== null) {
+                        alert('Page it was already created');
+                    } else {
+                        $.ajax({
+                            url: 'savecontent.php',
+                            type: 'post',
+                            data: {title: title, content: content},
+                            datatype: 'html',
+                            success: function (rsp) {
+                                alert(rsp);
+                            }
+                        });
+                    }
+
+                });
+                $('#update').click(function () {
+                    // Get edit field value
+                    $.urlParam = function (name) {
+                        var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+                        return results[1] || 0;
+                    };
                     var id = $.urlParam('id');
                     var title = $('#title').val();
                     var content = $('#content-area').keditor('getContent');
                     $.ajax({
-                        url: 'savecontent.php',
+                        url: 'updatecontent.php',
                         type: 'post',
                         data: {id: id, title: title, content: content},
                         datatype: 'html',
@@ -162,12 +184,7 @@ if (isset($_GET['id'])) {
                 });
                 //$('#menu').load("menu_list.php");
             });
-
-            $(function () {
-
-                $("body").niceScroll();
-            });
-
         </script>
+       
     </body>
 </html>
