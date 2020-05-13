@@ -14,5 +14,14 @@ Available at [http://kademi.github.io/keditor/](http://kademi.github.io/keditor/
 1. [Contribute a component](./docs/contribute_a_component.md)
 1. [Support touch devices](./docs/support_touch_devices.md)
 
+## This version with PHP and MySQL
+This version has a support to create pages and updating in a database, using php and mysql
+
+<hr>
+<img src="http://pepiuox.net/files/edit-conf.jpg"/>
+<hr>
+<img src="http://pepiuox.net/files/page-builder.jpg"/>
+<hr>
+
 ## License
 Please read at [here](./LICENSE.md)
