@@ -1,6 +1,6 @@
 {
-    "name": "keditor",
-    "title": "KEditor",
+    "name": "php-keditor",
+    "title": "PHP KEditor",
     "libraryName": "KEditor",
     "version": "2.0.0",
     "description": "KEditor is a jQuery plugin which provides a content editor with drag n drop, configurable contents",
@@ -34,7 +34,7 @@
         "less": "^3.9.0",
         "less-loader": "^5.0.0",
         "mini-css-extract-plugin": "^0.7.0",
-        "node-sass": "^4.12.0",
+        "node-sass": "^4.13.1",
         "optimize-css-assets-webpack-plugin": "^5.0.1",
         "sass-loader": "^7.1.0",
         "string-replace-loader": "^2.1.1",
