@@ -10,7 +10,7 @@ $conn = new mysqli(DBHOST, DBUSER, DBPASS, DBNAME);
 if ($conn->connect_error) {
     die('Error, Database connection failed: (' . $conn->connect_errno . ') ' . $conn->connect_error);
 }
-$base = 'http://localhost:82/PHP-Keditor/examples/';
+$base = 'http://localhost:120/PHP-Keditor/';
 
 ?>
     

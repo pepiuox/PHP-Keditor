@@ -26,9 +26,9 @@ if (file_exists($file)) {
                   href="plugins/font-awesome-4.7.0/css/font-awesome.min.css"
                   data-type="keditor-style" />
             <!-- Start of KEditor styles -->
-            <link rel="stylesheet" type="text/css" href="../dist/css/keditor.css"
+            <link rel="stylesheet" type="text/css" href="dist/css/keditor.css"
                   data-type="keditor-style" />
-            <link rel="stylesheet" type="text/css" href="../dist/css/keditor-components.css"
+            <link rel="stylesheet" type="text/css" href="dist/css/keditor-components.css"
                   data-type="keditor-style" />
             <!-- End of KEditor styles -->
             <link rel="stylesheet" type="text/css"
@@ -68,8 +68,8 @@ if (file_exists($file)) {
             src="plugins/js-beautify-1.7.5/js/lib/beautify-html.js"></script>
             <script type="text/javascript" src="js/examples.js"></script>
             <!-- Start of KEditor scripts -->
-            <script type="text/javascript" src="../dist/js/keditor.js"></script>       
-            <script type="text/javascript" src="../dist/js/keditor-components.js"></script>
+            <script type="text/javascript" src="dist/js/keditor.js"></script>       
+            <script type="text/javascript" src="dist/js/keditor-components.js"></script>
             <!-- End of KEditor scripts -->
             <script type="text/javascript"
             src="plugins/jquery.nicescroll-3.7.6/jquery.nicescroll.js"></script>

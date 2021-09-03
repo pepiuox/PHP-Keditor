@@ -18,8 +18,10 @@ if (file_exists($file)) {
         include 'start.php';
     } else {
         header('Location: list.php');
+        exit();
     }
 } else {
     header('Location: config.php');
+    exit();
 }
 ?>
