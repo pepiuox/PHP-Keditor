@@ -3,7 +3,7 @@
     "title": "PHP KEditor",
     "libraryName": "KEditor",
     "version": "2.0.0",
-    "description": "KEditor is a jQuery plugin which provides a content editor with drag n drop, configurable contents",
+    "description": "PHP KEditor is a jQuery plugin which provides a content editor with drag n drop, configurable contents",
     "scripts": {
         "build": "webpack --prod",
         "dev": "webpack --progress --color --watch"
@@ -24,7 +24,7 @@
     },
     "homepage": "https://github.com/Kademi/keditor#readme",
     "devDependencies": {
-        "@babel/core": "^7.4.5",
+        "@babel/core": "^7.14.8",
         "@babel/plugin-proposal-class-properties": "^7.4.4",
         "@babel/plugin-proposal-export-default-from": "^7.2.0",
         "@babel/preset-env": "^7.4.5",
