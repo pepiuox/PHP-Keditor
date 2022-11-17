@@ -8,8 +8,8 @@ require 'conn.php';
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
         <title>Content Editor</title>
-        <link href="<?php echo $base; ?>css/bootstrap.min.css" rel="stylesheet" type="text/css" data-type="keditor-style"/>
-        <link rel="stylesheet" type="text/css" href="<?php echo $base; ?>css/font-awesome.min.css" data-type="keditor-style" />
+        <link href="<?php echo $base; ?>plugins/bootstrap-4.5.2/css/bootstrap.min.css" rel="stylesheet" type="text/css" data-type="keditor-style"/>
+        <link href="<?php echo $base; ?>plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" data-type="keditor-style"/> 
     </head>
     <body>
         <?php

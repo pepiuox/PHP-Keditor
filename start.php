@@ -1,39 +1,43 @@
 <?php
 if ($url === $base) {
     $rs = $conn->query("SELECT * FROM page WHERE starpage='1' AND active='1'");
+    $numr = $rs->num_rows;
     $rpx = $rs->fetch_assoc();
+
     header('Location: ' . $base . 'index.php?page=' . $rpx['id']);
 } else if (isset($basename) && !empty($basename)) {
     $rs = $conn->query("SELECT * FROM page WHERE link='$basename' AND active='1'");
+    $numr = $rs->num_rows;
     $rpx = $rs->fetch_assoc();
 } else if (isset($_GET['page']) && !empty($_GET['page'])) {
     $id = (int) $_GET['page'];
     $rs = $conn->query("SELECT * FROM page WHERE id='$id' AND active='1'");
+    $numr = $rs->num_rows;
     $rpx = $rs->fetch_assoc();
 } else {
     $rs = $conn->query("SELECT * FROM page WHERE starpage='1' AND active='1'");
+    $numr = $rs->num_rows;
     $rpx = $rs->fetch_assoc();
     header('Location: index.php?page=' . $rpx['id']);
 }
 
+if ($numr > 0) {
 
-$bid = $rpx['id'];
-$title = $rpx['title'];
-$plink = $rpx['link'];
-$keyword = $rpx['keyword'];
-$classification = $rpx['classification'];
-$description = $rpx['description'];
-$cont = $rpx['type'];
-$men = $rpx['menu'];
-$content = $rpx['content'];
-$style = $rpx['style'];
-$prnt = $rpx['parent'];
-$lng = $rpx['language'];
+    $bid = $rpx['id'];
+    $title = $rpx['title'];
+    $plink = $rpx['link'];
+    $keyword = $rpx['keyword'];
+    $classification = $rpx['classification'];
+    $description = $rpx['description'];
+    $cont = $rpx['type'];
+    $men = $rpx['menu'];
+    $content = $rpx['content'];
+    $style = $rpx['style'];
+    $prnt = $rpx['parent'];
+    $lng = $rpx['language'];
 
-$_SESSION["language"] = $lng;
-$language = $_SESSION["language"];
-
-if ($bid) {
+    $_SESSION["language"] = $lng;
+    $language = $_SESSION["language"];
     ?>
     <!doctype html>
     <html lang="en">
@@ -49,8 +53,8 @@ if ($bid) {
                 <meta name="classification" content="<?php echo $classification; ?>" />
             <?php } ?>
             <title><?php
-                echo $title;
-                ?></title>
+            echo $title;
+            ?></title>
             <link href="<?php echo $base; ?>plugins/bootstrap-4.5.2/css/bootstrap.min.css" rel="stylesheet" type="text/css" data-type="keditor-style"/>
             <link href="<?php echo $base; ?>plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" data-type="keditor-style" />
             <style>
