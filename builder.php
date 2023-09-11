@@ -107,7 +107,6 @@ if (file_exists($file)) {
                             }
                         },
                         onSave: function onSave(content) {
-
                             $.ajax({
                                 type: 'post',
                                 data: {

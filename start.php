@@ -1,28 +1,55 @@
 <?php
-if ($url === $base) {
-    $rs = $conn->query("SELECT * FROM page WHERE starpage='1' AND active='1'");
-    $numr = $rs->num_rows;
-    $rpx = $rs->fetch_assoc();
+$_SESSION['language'] = '';
+$initweb = 'http://' . $_SERVER['HTTP_HOST'] . '/';
+$url = "http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
+$escaped_url = htmlspecialchars($url, ENT_QUOTES, 'UTF-8');
+$url_path = parse_url($escaped_url, PHP_URL_PATH);
+$basename = pathinfo($url_path, PATHINFO_BASENAME);
+$active = 1;
+$startpage = 1;
+$nm = '';
 
-    header('Location: ' . $base . 'index.php?page=' . $rpx['id']);
-} else if (isset($basename) && !empty($basename)) {
-    $rs = $conn->query("SELECT * FROM page WHERE link='$basename' AND active='1'");
-    $numr = $rs->num_rows;
+if ($initweb === $url) {
+    $spg = $conn->prepare("SELECT * FROM page WHERE startpage = ? AND active = ? ");
+    $spg->bind_param("ii", $startpage, $active);
+    $spg->execute();
+    $rs = $spg->get_result();
+    $spg->close();
+    $nm = $rs->num_rows;
     $rpx = $rs->fetch_assoc();
-} else if (isset($_GET['page']) && !empty($_GET['page'])) {
+} elseif (isset($_GET['page']) && !empty($_GET['page'])) {
     $id = (int) $_GET['page'];
-    $rs = $conn->query("SELECT * FROM page WHERE id='$id' AND active='1'");
-    $numr = $rs->num_rows;
+    $spg = $conn->prepare("SELECT * FROM page WHERE id = ? AND active = ? ");
+    $spg->bind_param("ii", $active, $id);
+    $spg->execute();
+    $rs = $spg->get_result();
+    $spg->close();
     $rpx = $rs->fetch_assoc();
-} else {
-    $rs = $conn->query("SELECT * FROM page WHERE starpage='1' AND active='1'");
-    $numr = $rs->num_rows;
-    $rpx = $rs->fetch_assoc();
-    header('Location: index.php?page=' . $rpx['id']);
+    $namelink = $base . $rpx['link'];
+    header("Location: $namelink");
+    exit();
+} elseif (isset($basename) && !empty($basename)) {
+    $spg = $conn->prepare("SELECT * FROM page WHERE link = ? AND active = ? ");
+    $spg->bind_param("si", $basename, $active);
+    $spg->execute();
+    $rs = $spg->get_result();
+    $spg->close();
+    $nm = $rs->num_rows;
+
+    if ($nm > 0) {
+        $rpx = $rs->fetch_assoc();
+    } else {
+        $spg = $conn->prepare("SELECT * FROM page WHERE startpage = ? AND active = ? ");
+        $spg->bind_param("ii", $startpage, $active);
+        $spg->execute();
+        $rs = $spg->get_result();
+        $spg->close();
+        $nm = $rs->num_rows;
+        $rpx = $rs->fetch_assoc();
+    }
 }
 
-if ($numr > 0) {
-
+if ($nm > 0) {
     $bid = $rpx['id'];
     $title = $rpx['title'];
     $plink = $rpx['link'];
@@ -30,14 +57,13 @@ if ($numr > 0) {
     $classification = $rpx['classification'];
     $description = $rpx['description'];
     $cont = $rpx['type'];
-    $men = $rpx['menu'];
+    $menu = $rpx['menu'];
     $content = $rpx['content'];
     $style = $rpx['style'];
     $prnt = $rpx['parent'];
     $lng = $rpx['language'];
 
-    $_SESSION["language"] = $lng;
-    $language = $_SESSION["language"];
+    $language = $_SESSION["language"] = $lng;
     ?>
     <!doctype html>
     <html lang="en">
@@ -52,11 +78,12 @@ if ($numr > 0) {
             <?php } if (empty($classification)) { ?>
                 <meta name="classification" content="<?php echo $classification; ?>" />
             <?php } ?>
-            <title><?php
-            echo $title;
-            ?></title>
+            <title><?php echo $title; ?></title>
             <link href="<?php echo $base; ?>plugins/bootstrap-4.5.2/css/bootstrap.min.css" rel="stylesheet" type="text/css" data-type="keditor-style"/>
             <link href="<?php echo $base; ?>plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" data-type="keditor-style" />
+            <script src="<?php echo $base; ?>plugins/jquery-3.5.1/jquery.min.js" type="text/javascript"></script>
+            <script src="<?php echo $base; ?>plugins/bootstrap-4.5.2/js/bootstrap.min.js" type="text/javascript"></script>
+            <script src="<?php echo $base; ?>plugins/popper/popper.min.js" type="text/javascript"></script> 
             <style>
     <?php
     echo html_entity_decode($style);
@@ -72,9 +99,6 @@ if ($numr > 0) {
                 echo html_entity_decode($content) . "\n";
                 ?>
             </div>
-            <script src="<?php echo $base; ?>plugins/jquery-3.5.1/jquery.min.js" type="text/javascript"></script>
-            <script src="<?php echo $base; ?>plugins/bootstrap-4.5.2/js/bootstrap.min.js" type="text/javascript"></script>
-            <script src="<?php echo $base; ?>plugins/popper/popper.min.js" type="text/javascript"></script> 
         </body>
     </html>
     <?php
